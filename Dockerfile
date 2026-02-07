@@ -4,4 +4,4 @@ WORKDIR /app
 
 COPY main.py .
 
-CMD ["python", "main.py"]
+CMD ["sh", "-c", "python main.py && sleep infinity"]
