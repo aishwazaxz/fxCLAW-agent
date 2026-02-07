@@ -1,1 +1,1 @@
-print("fxCLAW agent booting...")
+print("fxCLAW agent ready")
