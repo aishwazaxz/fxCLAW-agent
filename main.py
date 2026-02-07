@@ -1,14 +1,16 @@
-import signal
-import time
-import sys
+import http.server
+import socketserver
+import os
 
-def handler(sig, frame):
-    print("received signal, ignoring")
+PORT = int(os.environ.get("PORT", 8080))
 
-signal.signal(signal.SIGTERM, handler)
-signal.signal(signal.SIGINT, handler)
+class Handler(http.server.SimpleHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b"fxCLAW agent alive")
 
-print("fxCLAW agent running")
+print("fxCLAW agent listening on port", PORT)
 
-while True:
-    time.sleep(3600)
+with socketserver.TCPServer(("", PORT), Handler) as httpd:
+    httpd.serve_forever()
